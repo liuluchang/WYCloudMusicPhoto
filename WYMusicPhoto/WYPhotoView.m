@@ -14,10 +14,21 @@ static NSString * const ID = @"cell";
 
 @implementation WYPhotoView
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
++ (instancetype)initWithFrame:(CGRect)frame imageArray:(NSMutableArray *)imageArray selectItemBlock:(SelectItemBlock)selectItemBlock{
+    
+    WYPhotoView *wyPhotoView = [[WYPhotoView alloc] initWithFrame:frame imageArray:imageArray selectItemBlock:selectItemBlock];
+    
+    return wyPhotoView;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame imageArray:(NSMutableArray *)imageArray selectItemBlock:(SelectItemBlock)selectItemBlock{
     self = [super initWithFrame:frame];
     if (self) {
+        //参数赋值
+        self.imageArray = imageArray;
+        self.selectItemBlock = selectItemBlock;
+        
+        //布局
         [self setupUI];
     }
     return self;
@@ -38,37 +49,50 @@ static NSString * const ID = @"cell";
         
         layout;
     });
+    self.layout = layout;
     
     UICollectionView *collectionView = ({
         UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-        collectionView.backgroundColor = [UIColor greenColor];
+        collectionView.backgroundColor = [UIColor clearColor];
         //collectionView.center = self.center;
         collectionView.frame = self.bounds;
         collectionView.showsHorizontalScrollIndicator = NO;
         [self addSubview:collectionView];
         
         collectionView.dataSource = self;
+        collectionView.delegate = self;
+
         collectionView;
     });
+    self.collectionView = collectionView;
     
+    //注册cell
     [collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([PhotoCell class])  bundle:nil] forCellWithReuseIdentifier:ID];
     
 }
 
 #pragma mark - UICollectionViewDataSource
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 10;
+    return self.imageArray.count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     PhotoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
     
-    NSString *imageName = [NSString stringWithFormat:@"%ld",indexPath.item + 1];
+    NSString *imageName = self.imageArray[indexPath.row];
     
     cell.image = [UIImage imageNamed:imageName];
     
     return cell;
-};
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath;
+{
+    if (self.selectItemBlock) {
+        self.selectItemBlock(indexPath);
+    }
+}
+
 
 @end

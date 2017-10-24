@@ -10,6 +10,22 @@
 #import "FlowLayout.h"
 #import "PhotoCell.h"
 
-@interface WYPhotoView : UIView<UICollectionViewDataSource>
+typedef void(^SelectItemBlock)(NSIndexPath *indexPath);
 
+@interface WYPhotoView : UIView<UICollectionViewDataSource,UICollectionViewDelegate>
+
+/** 图片缓存 */
+@property (nonatomic, strong)NSMutableArray *imageArray;
+
+/** 布局 */
+@property (nonatomic, strong) FlowLayout *layout;
+
+/** UICollectionView */
+@property (nonatomic, strong) UICollectionView *collectionView;
+
+/** 点击回调 */
+@property (nonatomic, copy) SelectItemBlock selectItemBlock;
+
+/** 初始化类方法 */
++ (instancetype)initWithFrame:(CGRect)frame imageArray:(NSMutableArray *)imageArray selectItemBlock:(SelectItemBlock)selectItemBlock;
 @end
