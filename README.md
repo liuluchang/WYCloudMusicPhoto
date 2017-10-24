@@ -3,7 +3,7 @@
 
 仿网易云音乐滑动卡片
 
-! [效果如图] (https://github.com/liuluchang/HandWriteDemo/blob/master/QQ20171024-154126-HD.gif)
+![演示动态图] (https://github.com/liuluchang/HandWriteDemo/blob/master/1111.gif)
 
 1、基本使用
 
@@ -19,8 +19,11 @@
 CocoaPods
 
 在 Podfile 中添加   
+
 pod 'WYCloudMusicPhoto', '~> 1.1.0'
-执行 pod install。
+
+执行 pod install
+
 导入 #import "WYPhotoView.h"
 
 许可证
