@@ -1,25 +1,27 @@
-# WYCloudMusicPhoto
+# WYCloudMusicPhoto V1.1.0
 中文介绍
 
 仿网易云音乐滑动卡片
 
-基本使用
+! [效果如图] (https://github.com/liuluchang/HandWriteDemo/blob/master/QQ20171024-154126-HD.gif)
+
+1、基本使用
 
 一句话调用
 
 
-  CGRect frame = CGRectMake(0, (self.view.center.y-200)/2, ScreenW, 200);
-  WYPhotoView *wyPhotoView = [[WYPhotoView alloc] initWithFrame:frame];
+ WYPhotoView *wyPhotoView = [WYPhotoView initWithFrame:frame imageArray:imageArray selectItemBlock:^(NSIndexPath *indexPath) {
+       //回调
+   }];
 
-安装
+2、安装
 
 CocoaPods
 
 在 Podfile 中添加   
-pod 'WYCloudMusicPhoto', '~> 1.0.0'
+pod 'WYCloudMusicPhoto', '~> 1.1.0'
 执行 pod install。
 导入 #import "WYPhotoView.h"
-
 
 许可证
 
